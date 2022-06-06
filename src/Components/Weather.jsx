@@ -1,12 +1,15 @@
 import React from 'react'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import images from '../Assets/images'
+
 
 const Weather = () => {
 
     const [coords, setCoords] = useState([])
     const [weather, setWeather] = useState()
     const [temperature, setTemperature] = useState('')
+    const [icon, setIcon] = useState('')
     
     const fechaActual = () => {
       const fecha = Date.now();
@@ -51,15 +54,11 @@ const Weather = () => {
         .then( res => {
           setWeather(res.data)
           setTemperature(`${res.data.main.temp}°C`)
+          setIcon(res.data.weather[0].icon)
         })
         .catch( err => console.log(err))
       }
     }, [coords])
-
-
-    
-
-   console.log(weather)
 
   return (
     <div className='weather'>
@@ -70,7 +69,7 @@ const Weather = () => {
           </header>
           <section className='weather__info'>
             <p>{`${weather?.weather[0]?.main}, ${weather?.weather[0]?.description}`}</p>
-            <img className='weather__image' src={`./src/Assets/Img/${weather?.weather[0]?.icon}.png`} alt="" />
+            <img className='weather__image' src={`./src/Assets/Img/${icon}.png`} alt="" />
             <p className='weather__temp'>{temperature}</p>
             <button className='button__weather' onClick={( ) => chngUnit()}>°C / °F</button>
           </section>
