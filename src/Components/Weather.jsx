@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import images from '../Assets/images'
 
 
 const Weather = () => {
@@ -26,9 +25,9 @@ const Weather = () => {
     const chngUnit = () => {
       const array = temperature.split('°')
       if (array[1] === 'C'){
-        setTemperature(`${(array[0] * 1.8 + 32).toFixed(2)}°F`)
+        setTemperature(`${Math.round(array[0] * 1.8 + 32)}°F`)
       } else { 
-        setTemperature(`${((array[0] - 32) / 1.8).toFixed(2)}°C`)
+        setTemperature(`${Math.round((array[0] - 32) / 1.8)}°C`)
       }
     }
       
@@ -53,7 +52,7 @@ const Weather = () => {
         axios.get(URL)
         .then( res => {
           setWeather(res.data)
-          setTemperature(`${res.data.main.temp}°C`)
+          setTemperature(`${Math.round(res.data.main.temp)}°C`)
           setIcon(res.data.weather[0].icon)
         })
         .catch( err => console.log(err))
@@ -69,7 +68,7 @@ const Weather = () => {
           </header>
           <section className='weather__info'>
             <p>{`${weather?.weather[0]?.main}, ${weather?.weather[0]?.description}`}</p>
-            <img className='weather__image' src={`./src/Assets/Img/${icon}.png`} alt="" />
+            <img className='weather__image' src={icon && `./src/Assets/Img/${icon}.png`} alt="" />
             <p className='weather__temp'>{temperature}</p>
             <button className='button__weather' onClick={( ) => chngUnit()}>°C / °F</button>
           </section>
