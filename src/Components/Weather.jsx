@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-
+import Loader from './Loader'
 
 const Weather = () => {
 
@@ -9,6 +9,7 @@ const Weather = () => {
     const [weather, setWeather] = useState()
     const [temperature, setTemperature] = useState('')
     const [icon, setIcon] = useState('')
+    const [isLoading, setIsLoading] = useState(true)
     
     const fechaActual = () => {
       const fecha = Date.now();
@@ -54,6 +55,7 @@ const Weather = () => {
           setWeather(res.data)
           setTemperature(`${Math.round(res.data.main.temp)}°C`)
           setIcon(res.data.weather[0].icon)
+          setIsLoading(false)
         })
         .catch( err => console.log(err))
       }
@@ -61,6 +63,14 @@ const Weather = () => {
 
   return (
     <div className='weather'>
+      {
+
+        isLoading ?
+
+        <Loader />
+
+        :
+
        <main className='center'>
           <header className='center__header'>
             <p className='center__headerp'>{fechaActual()}</p>
@@ -68,11 +78,12 @@ const Weather = () => {
           </header>
           <section className='weather__info'>
             <p>{`${weather?.weather[0]?.main}, ${weather?.weather[0]?.description}`}</p>
-            <img className='weather__image' src={icon && `./src/Assets/Img/${icon}.png`} alt="" />
+            <img className='weather__image' src={icon && `http://openweathermap.org/img/wn/${icon}@4x.png`} alt="Icon weather condition" />
             <p className='weather__temp'>{temperature}</p>
             <button className='button__weather' onClick={( ) => chngUnit()}>°C / °F</button>
           </section>
        </main>
+}
     </div>
      
   )

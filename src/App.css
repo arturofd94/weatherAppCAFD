@@ -20,6 +20,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: white;
 }
 
 main {
@@ -88,4 +89,11 @@ img {
   font-size: 24px;
   color: white;
   margin-right: 10px;
+}
+
+.loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
