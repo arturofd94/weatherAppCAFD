@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Loader from './Loader'
+import getImage from '../Assets/Img/useImages.js'
 
 const Weather = () => {
 
@@ -10,6 +11,8 @@ const Weather = () => {
     const [temperature, setTemperature] = useState('')
     const [icon, setIcon] = useState('')
     const [isLoading, setIsLoading] = useState(true)
+
+    const images = getImage()
     
     const fechaActual = () => {
       const fecha = Date.now();
@@ -78,7 +81,7 @@ const Weather = () => {
           </header>
           <section className='weather__info'>
             <p>{`${weather?.weather[0]?.main}, ${weather?.weather[0]?.description}`}</p>
-            <img className='weather__image' src={icon && `http://openweathermap.org/img/wn/${icon}@4x.png`} alt="Icon weather condition" />
+            <img className='weather__image' src={weather && images[icon]} alt="Icon weather condition" />
             <p className='weather__temp'>{temperature}</p>
             <button className='button__weather' onClick={( ) => chngUnit()}>°C / °F</button>
           </section>
